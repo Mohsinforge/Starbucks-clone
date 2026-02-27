@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starbucks Coffee Company</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Sodo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #1e3932;
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: #fff;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1e3932;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover {
+            color: #00704a;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .find-store {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #1e3932;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .find-store img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+
+        .btn-signin {
+            padding: 7px 16px;
+            border: 1px solid #1e3932;
+            border-radius: 50px;
+            background: transparent;
+            color: #1e3932;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-join {
+            padding: 7px 16px;
+            border: none;
+            border-radius: 50px;
+            background: #1e3932;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-join:hover {
+            background: #00704a;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background-color: #1e3932;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .hero-banner span {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .btn-start-order {
+            padding: 8px 16px;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            background: transparent;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-start-order:hover {
+            background: #fff;
+            color: #1e3932;
+        }
+
+        /* Content Sections - IMPROVED IMAGE HANDLING */
+        .content-section {
+            display: flex;
+            min-height: 450px;
+            margin: 8px;
+            overflow: hidden; /* Prevents overflow issues */
+        }
+
+        .content-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .content-image {
+            flex: 1;
+            position: relative;
+            overflow: hidden; /* Critical: prevents image overflow */
+            min-width: 300px; /* Ensures image section doesn't get too small */
+        }
+
+        .content-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This is KEY - maintains aspect ratio while filling */
+            object-position: center; /* Centers the image */
+        }
+
+        .content-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            min-width: 300px; /* Ensures text section doesn't get too small */
+        }
+
+        .content-text.green-bg {
+            background-color: #d4e9e2;
+        }
+
+        .content-text.beige-bg {
+            background-color: #f3f1ea;
+        }
+
+        .content-text h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1e3932;
+        }
+
+        .content-text p {
+            font-size: 16px;
+            max-width: 450px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            padding: 10px 24px;
+            border: 1px solid #1e3932;
+            border-radius: 50px;
+            background: transparent;
+            color: #1e3932;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #1e3932;
+            color: #fff;
+        }
+
+        .btn-green {
+            background: #00704a;
+            border-color: #00704a;
+            color: #fff;
+        }
+
+        .btn-green:hover {
+            background: #1e3932;
+            border-color: #1e3932;
+        }
+
+        .btn-white {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .btn-white:hover {
+            background: #fff;
+            color: #1e3932;
+        }
+
+        /* Olympics Section */
+        .olympics-section {
+            background-color: #00704a;
+            padding: 60px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px;
+            min-height: 200px;
+        }
+
+        .olympics-text {
+            color: #fff;
+            font-size: 14px;
+            max-width: 500px;
+        }
+
+        .olympics-logos {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .olympics-logos img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .olympics-brand {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #d4e9e2;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1e3932;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            text-decoration: none;
+            color: #1e3932;
+            font-size: 14px;
+        }
+
+        .footer-column a:hover {
+            color: #00704a;
+        }
+
+        .social-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid #d4e9e2;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #1e3932;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .social-icons a:hover {
+            background: #00704a;
+        }
+
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .legal-links a {
+            text-decoration: none;
+            color: #1e3932;
+            font-size: 13px;
+        }
+
+        .legal-links a:hover {
+            color: #00704a;
+        }
+
+        .copyright {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #707070;
+        }
+
+        .disclaimer {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 40px;
+            font-size: 12px;
+            color: #1e3932;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-section {
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .content-section.reverse {
+                flex-direction: column;
+            }
+
+            .content-image {
+                min-width: 100%;
+                height: 300px; /* Fixed height for mobile */
+            }
+
+            .content-text {
+                min-width: 100%;
+                padding: 30px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .olympics-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 32px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+            }
+
+            .social-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="https://www.starbucks.com/" class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/1280px-Starbucks_Corporation_Logo_2011.svg.png" alt="Starbucks Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://www.starbucks.com/menu">Menu</a></li>
+                <li><a href="https://www.starbucks.com/rewards">Rewards</a></li>
+                <li><a href="https://www.starbucks.com/gift">Gift Cards</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <a href="https://www.starbucks.com/store-locator" class="find-store">
+                <img src="images/location-icon.png" alt="Location">
+                Find a store
+            </a>
+            <a href="https://www.starbucks.com/account/signin?ReturnUrl=%2F" class="btn-signin">Sign in</a>
+            <a href="https://www.starbucks.com/account/create" class="btn-join">Join now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <span>It's a great day for coffee</span>
+        <a href="https://www.starbucks.com/menu" class="btn-start-order">Start an order</a>
+    </div>
+
+    <!-- Matcha Section -->
+    <section class="content-section">
+        <div class="content-image">
+            <img src="https://content-prod-live.cert.starbucks.com/binary/v2/asset/137-106366.jpg" alt="Bold new matcha menu drinks">
+        </div>
+        <div class="content-text green-bg">
+            <h2>Bold new matcha menu</h2>
+            <p>Meet the matcha edit: delicious matcha made from shade-grown green tea leaves, layered with flavors of banana bread, double berry and Dubai chocolate.</p>
+            <a href="https://www.starbucks.com/menu/drinks/matcha" class="btn-primary btn-green">Order from the matcha menu</a>
+        </div>
+    </section>
+
+    <!-- Caramel Protein Section -->
+    <section class="content-section reverse">
+        <div class="content-image">
+            <img src="https://content-prod-live.cert.starbucks.com/binary/v2/asset/137-106333.jpg" alt="Caramel protein drinks">
+        </div>
+        <div class="content-text beige-bg">
+            <h2>Caramel protein is here</h2>
+            <p>Power up with the new Caramel Protein Latte and Caramel Protein Matcha. Handcrafted with Protein-boosted Milk for up to 31 grams of protein per grande. Available hot, iced and with sugar-free syrup.</p>
+            <a href="https://www.starbucks.com/menu/drinks/protein-beverages" class="btn-primary">Explore caramel protein</a>
+        </div>
+    </section>
+
+    <!-- Free Drink Section -->
+    <section class="content-section">
+        <div class="content-image">
+            <img src="https://content-prod-live.cert.starbucks.com/binary/v2/asset/137-106178.jpg" alt="Free drink for rewards members">
+        </div>
+        <div class="content-text green-bg">
+            <h2>Free drink? It's yours.</h2>
+            <p>When you join, enjoy a <strong>free handcrafted drink</strong> with purchase. It's our way of welcoming you to Starbucks® Rewards during your first week.*</p>
+            <a href="https://www.starbucks.com/account/create" class="btn-primary btn-green">Join now</a>
+        </div>
+    </section>
+
+    <!-- Bakery Section -->
+    <section class="content-section reverse">
+        <div class="content-image">
+            <img src="https://content-prod-live.cert.starbucks.com/binary/v2/asset/137-106367.jpg" alt="New bakery treats">
+        </div>
+        <div class="content-text" style="background-color: #00704a;">
+            <h2 style="color: #fff;">A new era of bakery</h2>
+            <p style="color: #fff;">Six new crave-worthy treats have arrived, blending global inspiration and nostalgic flavors. Find them in our refreshed bakery case.</p>
+            <a href="https://www.starbucks.com/account/create" class="btn-primary btn-white">Order now</a>
+        </div>
+    </section>
+
+    <!-- Free Refills Section -->
+    <section class="content-section">
+        <div class="content-image">
+            <img src="https://content-prod-live.cert.starbucks.com/binary/v2/asset/137-106476.jpg" alt="Free refills of coffee and tea">
+        </div>
+        <div class="content-text beige-bg">
+            <h2>Grab a seat. Get free refills.</h2>
+            <p>When you stay to enjoy your favorite beverage in the café, refills of hot and iced brewed coffee or tea are on us.**</p>
+            <a href="https://www.starbucks.com/menu/featured/" class="btn-primary">Order now</a>
+        </div>
+    </section>
+
+    <!-- Olympics Section -->
+    <section class="olympics-section">
+        <div class="olympics-text">
+            Starbucks is proud to support Team USA in the Olympic and Paralympic Winter Games Milano Cortina 2026
+        </div>
+        <div class="olympics-logos">
+            <img src="images/team-usa-olympic.png" alt="Team USA Olympic">
+            <div class="olympics-brand">STARBUCKS®</div>
+            <img src="images/team-usa-paralympic.png" alt="Team USA Paralympic">
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        <p>*Valid for new Starbucks Rewards members for 7 days from sign up. Coupon will be available in the offers tab of your Starbucks app following sign up and may take up to 48 hours to arrive. Good at participating U.S. stores for a handcrafted menu-sized beverage ($8 max value) with qualifying purchase. Qualifying purchase excludes alcohol, Starbucks Card and Starbucks Cards reloads. Limit one. Cannot be combined with other offers or discounts. Excludes delivery services. Sign up by 3/31/2026.</p>
+        <br>
+        <p>**Free refills of hot and iced brewed coffee and tea during same store visit. Excludes Cold Brew, Nitro Cold Brew, Iced Tea Lemonade, flavored Iced Tea and Starbucks Refreshers® base. At participating stores.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="https://about.starbucks.com/">Our Company</a></li>
+                    <li><a href="https://www.starbucks.com/our-coffee/">Our Coffee</a></li>
+                    <li><a href="https://www.starbucks.com/about-us/">About Starbucks</a></li>
+                    <li><a href="https://www.starbucks.com/starbucks-archive/">Starbucks Archive</a></li>
+                    <li><a href="https://www.starbucks.com/investor-relations/">Investor Relations</a></li>
+                    <li><a href="https://www.starbucks.com/customer-service/">Customer Service</a></li>
+                    <li><a href="https://www.starbucks.com/contact/">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Careers</h4>
+                <ul>
+                    <li><a href="https://careers.starbucks.com/culture/">Culture and Values</a></li>
+                    <li><a href="https://careers.starbucks.com/belonging/">Belonging at Starbucks</a></li>
+                    <li><a href="https://careers.starbucks.com/college-achievement-plan/">College Achievement Plan</a></li>
+                    <li><a href="https://careers.starbucks.com/alumni-community/">Alumni Community</a></li>
+                    <li><a href="https://careers.starbucks.com/us-careers/">U.S. Careers</a></li>
+                    <li><a href="https://careers.starbucks.com/international-careers/">International Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Social Impact</h4>
+                <ul>
+                    <li><a href="https://about.starbucks.com/communities/">Communities</a></li>
+                    <li><a href="https://about.starbucks.com/starbucks-foundation/">Starbucks Foundation</a></li>
+                    <li><a href="https://about.starbucks.com/sustainability/">Sustainability</a></li>
+                    <li><a href="https://about.starbucks.com/environmental-and-social-impact-reporting/">Environmental and Social Impact Reporting</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>For Business Partners</h4>
+                <ul>
+                    <li><a href="https://www.starbucks.com/business/landlord-faq/">Landlord Support Center</a></li>
+                    <li><a href="https://www.starbucks.com/business/suppliers/">Suppliers</a></li>
+                    <li><a href="https://www.starbucks.com/business/corporate-gift-card-sales/">Corporate Gift Card Sales</a></li>
+                    <li><a href="https://www.starbucks.com/business/office-and-foodservice-coffee/">Office and Foodservice Coffee</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Order and Pick Up</h4>
+                <ul>
+                    <li><a href="https://www.starbucks.com/rewards/mobile-apps/">Order on the App</a></li>
+                    <li><a href="https://www.starbucks.com/order/">Order on the Web</a></li>
+                    <li><a href="https://www.starbucks.com/delivery/">Delivery</a></li>
+                    <li><a href="https://www.starbucks.com/order-and-pickup-options/">Order and Pick Up Options</a></li>
+                    <li><a href="https://www.starbucks.com/explore-and-find-coffee-for-home/">Explore and Find Coffee for Home</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="social-section">
+            <div class="social-icons">
+                <a href="https://open.spotify.com/user/starbucks" aria-label="Spotify">🎵</a>
+                <a href="https://www.facebook.com/starbucks" aria-label="Facebook">f</a>
+                <a href="https://www.pinterest.com/starbucks/" aria-label="Pinterest">P</a>
+                <a href="https://www.instagram.com/starbucks/" aria-label="Instagram">📷</a>
+                <a href="https://www.youtube.com/starbucks" aria-label="YouTube">▶</a>
+                <a href="https://x.com/starbucks" aria-label="X">X</a>
+            </div>
+            <div class="legal-links">
+                <a href="https://www.starbucks.com/consumer-health-data-privacy-notice/">Privacy Notice</a>
+                <a href="https://www.starbucks.com/consumer-health-data-privacy-notice/">Consumer Health Privacy Notice</a>
+                <a href="https://www.starbucks.com/terms-of-use/">Terms of Use</a>
+                <a href="https://www.starbucks.com/do-not-sell-or-share-my-personal-information/">Do Not Sell or Share My Personal Information</a>
+                <a href="https://www.starbucks.com/ca-supply-chain-act/">CA Supply Chain Act</a>
+                <a href="https://www.starbucks.com/accessibility/">Accessibility</a>
+                <a href="#">Cookie Preferences</a>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2026 Starbucks Coffee Company. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
